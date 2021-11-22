@@ -1,0 +1,13 @@
+name: abba-brainglobe
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - numpy
+  - pandas
+  - jupyter
+  - napari[all]
+  - pyimagej=1.0.2
+  - python=3.8
+  - pip:
+    - bg-atlasapi==1.0.0
