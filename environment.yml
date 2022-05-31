@@ -1,11 +1,22 @@
-name: abba-brainglobe
+name: abba-brainglobe-deepslice
 channels:
   - conda-forge
   - defaults
 dependencies:
+  - mkl=2020.2
+  - numpy
+  - pandas
+  - pip
+  - protobuf
+  - scikit-image=0.17.2
+  - scikit-learn=0.23.2
+  - scipy=1.6.0
+  - tensorflow=1.15.0
+  - tqdm=4.56.0
   - jupyter
   - pyimagej
   - python
   - napari[all]
+  - h5py=2.10.0 
   - pip:
     - bg-atlasapi
