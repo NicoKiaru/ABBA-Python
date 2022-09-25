@@ -11,11 +11,10 @@ from abba import Abba
 def downloadIfNecessary(basePath, section_name):
     outputPath = Path(basePath + section_name)
     if not outputPath.exists():
-        print('file DO NOT exists')
         url = 'https://zenodo.org/record/6592478/files/' + section_name + '?download=1'
         utils.retrieve_over_http(url, outputPath)
     else:
-        print('file already exists')
+        pass
 
 
 def download_test_images(basePath):

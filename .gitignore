@@ -1,3 +1,8 @@
 /images/
 /.idea/
 *.iml
+/.ipynb_checkpoints/
+/deepslice/NN_weights/
+/deepslice/utilities/adult_to_p28_test.xml.csv
+/deepslice/utilities/adult_to_p28_test.xml.xml
+/deepslice/utilities/C110_deepslice2.xml
