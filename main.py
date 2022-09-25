@@ -31,9 +31,9 @@ def download_test_images(basePath):
 
 
 if __name__ == '__main__':
-    atlas = BrainGlobeAtlas("allen_mouse_25um")
-    abba = Abba(atlas)
-    abba.ij.ui().showUI()  # Comment to remove Fiji's main bar, but then you will loose the nice flatlaf layout
+    # atlas = BrainGlobeAtlas("allen_mouse_25um")
+    # abba = Abba("allen_mouse_25um")
+    abba = Abba() # no parameter = Allen Mouse Brain CCFv3
     abba.show_bdv_ui()  # creates and show a bdv view
 
     basePath = os.getcwd() + '/images/'
@@ -49,5 +49,10 @@ if __name__ == '__main__':
                    basePath + 'S60.tif',
                    basePath + 'S70.tif',
                    basePath + 'S80.tif']).get()  # .get() to wait for the request to finish
+
+    abba.mp.selectSlice(abba.mp.getSlices())  # select all
+
+    abba.register_deepslice(channels=[0]).get()
+    abba.register_deepslice(channels=[0]).get()
 
     time.sleep(25000)  # Humm, because ij closes immediately if the python process is finished (dirty workaround)

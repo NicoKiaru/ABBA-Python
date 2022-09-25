@@ -3,9 +3,13 @@ import os
 
 from pathlib import Path
 
+# store ini paths
+ini_path = os.getcwd()
+
 ##set path to be the DeepSlice directory
 path = str(Path(__file__).parent)
 ##testing automated tests
+
 os.chdir(path)
 print(path)
 import warnings
@@ -24,6 +28,9 @@ from statistics import mean
 import re
 import imghdr
 import struct
+
+# restore path
+os.chdir(ini_path)
 
 
 def get_image_size(fname):

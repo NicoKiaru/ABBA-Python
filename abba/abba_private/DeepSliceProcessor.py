@@ -10,12 +10,13 @@ File = jimport('java.io.File')
 @JImplements(Function)
 class DeepSliceProcessor:
     @JOverride
-    def apply(self,folder):
-        Model = DeepSlice()
-        Model.Build()
-        print(folder.getParent())
-        Model.predict('deepslice')#str(folder.getParent()))
-        out = File(folder,JString('results'))
-        print(out.getAbsolutePath())
-        Model.Save_Results(out.getAbsolutePath())
-        return File(folder,JString('results.xml'))
+    def apply(self, folder):
+        model = DeepSlice()
+        model.Build()
+        # print('in = ' + str(folder.toString()))
+        # print('parent = ' + str(folder.getParent()))
+        model.predict(image_dir=str(folder.getParent()))#str(folder.getParent()))
+        out = File(folder, JString('results'))
+        # print('out = '+str(out.getAbsolutePath()))
+        model.Save_Results(out.getAbsolutePath())
+        return File(folder, JString('results.xml'))
