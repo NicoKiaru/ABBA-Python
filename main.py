@@ -7,6 +7,7 @@ from bg_atlasapi.bg_atlas import BrainGlobeAtlas
 import os
 from bg_atlasapi import utils
 from pathlib import Path
+from abba import Abba
 
 
 def downloadIfNecessary(basePath, section_name):
@@ -21,19 +22,15 @@ def downloadIfNecessary(basePath, section_name):
 if __name__ == '__main__':
     # imagej.doctor.debug_to_stderr()
     # creates image instance with default dependencies
-    imagej_core_dep = 'net.imagej:imagej:2.9.0'
-    imagej_legacy_dep = 'net.imagej:imagej-legacy:0.39.2'
-    abba_dep = 'ch.epfl.biop:ImageToAtlasRegister:0.3.3'
-    deps_pack = [imagej_core_dep, imagej_legacy_dep, abba_dep]
-    ij = imagej.init(deps_pack, mode='interactive')
+
     # ij.ui().showUI() # uncomment to see Fiji's main bar
 
     # the import should come after the imagej instance is created,
     # otherwise the Java classes are not discovered
 
-    from abba import Abba
+
     atlas = BrainGlobeAtlas("allen_mouse_25um")
-    abba = Abba(atlas, ij)
+    abba = Abba(atlas)
     abba.show_bdv_ui()
 
     cwd = os.getcwd()  # gets current path
