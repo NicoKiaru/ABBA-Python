@@ -61,9 +61,17 @@ class Abba:
 
 
     def ij(self):
+        """
+        Provides the ImageJ instance that can be reused to create another Abba instance
+        :return:
+            the ImageJ instance used by this Abba instance
+        """
         return self.ij
 
     def show_bdv_ui(self):
+        """
+        Creates and show a BigDataViewer view over this Abba instance
+        """
         if not hasattr(self, 'bdv_view'):
             # no bdv view properties : creates a new one
             SourceAndConverterServices = jimport('sc.fiji.bdvpg.services.SourceAndConverterServices')
@@ -75,6 +83,20 @@ class Abba:
             pass
 
     def import_from_files(self, z_location = 0, z_increment = 0.02, split_rgb = False, filepaths=[]):
+        """
+
+        :param z_location:
+            initial location in mm along the atlas cutting axis
+        :param z_increment:
+            step in mm between each imported image
+        :param split_rgb:
+            whether rgb channels should be split in 3 independent RGB channels (necessary for 16 bits per component RGB images)
+        :param filepaths:
+            file paths of the image to import. Each file should be readable by bio-formats
+        :return:
+            a Future object: if you call .get(), the request will wait to be finished. If not, the import
+            files command is executed asynchronously
+        """
         # Let's import the files using Bio-Formats.
         # The list of all commands is accessible here:
         # https://github.com/BIOP/ijp-imagetoatlas/tree/master/src/main/java/ch/epfl/biop/atlas/aligner/command
