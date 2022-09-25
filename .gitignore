@@ -1,4 +1,3 @@
-.ipynb_checkpoints/
-notebooks/images/
-*.tiff
-*.bfmemo
+/images/
+/.idea/
+*.iml
