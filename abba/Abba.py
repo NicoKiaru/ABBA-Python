@@ -3,6 +3,9 @@ from scyjava import jimport
 from jpype.types import JString, JArray
 import imagej
 
+from abba.abba_private.DeepSliceProcessor import DeepSliceProcessor
+
+
 def getJavaDependencies():
     """
     Returns the jar files that need to be included into the classpath
@@ -122,4 +125,28 @@ class Abba:
                          "split_rgb_channels", split_rgb, \
                          "slice_axis_initial", z_location, \
                          "increment_between_slices", z_increment \
+                         )
+
+    def register_deepslice(self,
+                           channels=[0],
+                           allow_slicing_angle_change=True,
+                           allow_change_slicing_position=True,
+                           maintain_slices_order=True,
+                           affine_transform=True
+                           ):
+        if not hasattr(self, 'run_deep_slice'):
+            self.run_deep_slice = DeepSliceProcessor()
+
+        RegistrationDeepSliceCommand = jimport('ch.epfl.biop.atlas.aligner.command.RegistrationDeepSliceCommand')
+
+        # Any missing input parameter will lead to a popup window asking the missing argument to the user
+        return self.ij.command().run(RegistrationDeepSliceCommand, True,
+                         "slices_string_channels", JString(''.join(map(str, channels))),
+                         "image_name_prefix", JString('Section'),
+                         "mp", self.mp,
+                         "allow_slicing_angle_change", allow_slicing_angle_change,
+                         "allow_change_slicing_position", allow_change_slicing_position,
+                         "maintain_slices_order", maintain_slices_order,
+                         "affine_transform", affine_transform,
+                         "deepSliceProcessor", self.run_deep_slice
                          )
