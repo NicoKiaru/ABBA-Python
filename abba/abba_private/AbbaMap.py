@@ -1,23 +1,26 @@
 from scyjava import jimport
 from jpype import JImplements, JOverride
-from jpype.types import JString, JDouble, JInt, JArray
+from jpype.types import JString, JDouble, JInt
 
 import numpy as np
 
 AffineTransform3D = jimport('net.imglib2.realtransform.AffineTransform3D')
 ArrayList = jimport('java.util.ArrayList')
-Atlas = jimport('ch.epfl.biop.atlas.struct.Atlas')
 AtlasHelper = jimport('ch.epfl.biop.atlas.struct.AtlasHelper')
 AtlasMap = jimport('ch.epfl.biop.atlas.struct.AtlasMap')
-AtlasNode = jimport('ch.epfl.biop.atlas.struct.AtlasNode')
-AtlasOntology = jimport('ch.epfl.biop.atlas.struct.AtlasOntology')
 BdvFunctions = jimport('bdv.util.BdvFunctions')
 BdvOptions = jimport('bdv.util.BdvOptions')
 
-
-
 @JImplements(AtlasMap)
 class AbbaMap(object):
+    """This python class is part of the translation mechanism between the underlying Java ABBA API:
+    https://github.com/BIOP/ijp-atlas/tree/main/src/main/java/ch/epfl/biop/atlas/struct
+    and the BrainGlobe API:
+    https://github.com/brainglobe/bg-atlasapi/
+
+    Wrapper inner class that implements the following Java interface:
+    https://github.com/BIOP/ijp-atlas/blob/main/src/main/java/ch/epfl/biop/atlas/struct/AtlasMap.java
+    """
 
     def __init__(self, bg_atlas, ij):
         # this function is called way too many times if I put here the content

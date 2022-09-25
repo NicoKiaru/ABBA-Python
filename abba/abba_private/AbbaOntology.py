@@ -1,27 +1,22 @@
 from scyjava import jimport
 from jpype import JImplements, JOverride
-from jpype.types import JString, JDouble, JInt, JArray
-
-import numpy as np
+from jpype.types import JString
 
 from abba.abba_private import AbbaAtlasNode
 
-AffineTransform3D = jimport('net.imglib2.realtransform.AffineTransform3D')
-ArrayList = jimport('java.util.ArrayList')
-Atlas = jimport('ch.epfl.biop.atlas.struct.Atlas')
 AtlasHelper = jimport('ch.epfl.biop.atlas.struct.AtlasHelper')
-AtlasMap = jimport('ch.epfl.biop.atlas.struct.AtlasMap')
-AtlasNode = jimport('ch.epfl.biop.atlas.struct.AtlasNode')
 AtlasOntology = jimport('ch.epfl.biop.atlas.struct.AtlasOntology')
-BdvFunctions = jimport('bdv.util.BdvFunctions')
-BdvOptions = jimport('bdv.util.BdvOptions')
-
-
-
 
 @JImplements(AtlasOntology)
 class AbbaOntology(object):
+    """This python class is part of the translation mechanism between the underlying Java ABBA API:
+    https://github.com/BIOP/ijp-atlas/tree/main/src/main/java/ch/epfl/biop/atlas/struct
+    and the BrainGlobe API:
+    https://github.com/brainglobe/bg-atlasapi/
 
+    Wrapper inner class that implements the following Java interface:
+    https://github.com/BIOP/ijp-atlas/blob/main/src/main/java/ch/epfl/biop/atlas/struct/AtlasOntology.java
+    """
     def __init__(self, bg_atlas):
         self.atlas = bg_atlas
 
