@@ -202,3 +202,39 @@ class Abba:
                                      "deepSliceProcessor", self.run_deep_slice,
                                      "dataset_folder", JString(temp_folder)
                                      )
+
+    def register_elastix_affine(self,
+                                atlas_image_channels,
+                                slice_image_channels,
+                                pixel_size_micrometer = 40,
+                                show = False,
+                                ):
+        RegistrationElastixAffineCommand = jimport(
+            'ch.epfl.biop.atlas.aligner.command.RegistrationElastixAffineCommand')
+
+        return self.ij.command().run(RegistrationElastixAffineCommand, True,
+                         "mp", self.mp, \
+                         "pixel_size_micrometer", pixel_size_micrometer, \
+                         "show_imageplus_registration_result", show, \
+                         "background_offset_value_moving", 0, \
+                         "atlas_image_channels", JString(''.join(map(str, atlas_image_channels))), \
+                         "slice_image_channels", JString(''.join(map(str, slice_image_channels))))  # second channel, 0-based
+
+    def register_elastix_spline(self,
+                                nb_control_points,
+                                atlas_image_channels,
+                                slice_image_channels,
+                                pixel_size_micrometer=40,
+                                show=False,
+                                ):
+        RegistrationElastixSplineCommand = jimport(
+            'ch.epfl.biop.atlas.aligner.command.RegistrationElastixSplineCommand')
+
+        return self.ij.command().run(RegistrationElastixSplineCommand, True,
+                         "mp", self.mp, \
+                         "nb_control_points_x", nb_control_points, \
+                         "pixel_size_micrometer", pixel_size_micrometer, \
+                         "show_imageplus_registration_result", show, \
+                         "background_offset_value_moving", 0, \
+                         "atlas_image_channels", JString(''.join(map(str, atlas_image_channels))), \
+                         "slice_image_channels", JString(''.join(map(str, slice_image_channels))))  # second channel, 0-based

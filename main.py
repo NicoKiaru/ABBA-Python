@@ -16,18 +16,28 @@ def downloadIfNecessary(basePath, section_name):
     else:
         pass
 
+demo_sections = [
+    'S00.tif',
+    'S05.tif',
+    'S10.tif',
+    'S15.tif',
+    'S20.tif',
+    'S25.tif',
+    'S30.tif',
+    'S35.tif',
+    'S40.tif',
+    'S45.tif',
+    'S50.tif',
+    'S55.tif',
+    'S60.tif',
+    'S65.tif',
+    'S70.tif',
+    'S75.tif',
+    'S80.tif']
 
 def download_test_images(basePath):
     utils.check_internet_connection()
-    downloadIfNecessary(basePath, 'S00.tif')
-    downloadIfNecessary(basePath, 'S10.tif')
-    downloadIfNecessary(basePath, 'S20.tif')
-    downloadIfNecessary(basePath, 'S30.tif')
-    downloadIfNecessary(basePath, 'S40.tif')
-    downloadIfNecessary(basePath, 'S50.tif')
-    downloadIfNecessary(basePath, 'S60.tif')
-    downloadIfNecessary(basePath, 'S70.tif')
-    downloadIfNecessary(basePath, 'S80.tif')
+    [downloadIfNecessary(basePath, section) for section in demo_sections]
 
 
 if __name__ == '__main__':
@@ -39,20 +49,29 @@ if __name__ == '__main__':
     basePath = os.getcwd() + '/images/'
     download_test_images(basePath)
 
+    files = [basePath + section for section in demo_sections]
+
     abba.import_from_files(
-        filepaths=[basePath + 'S00.tif',
-                   basePath + 'S10.tif',
-                   basePath + 'S20.tif',
-                   basePath + 'S30.tif',
-                   basePath + 'S40.tif',
-                   basePath + 'S50.tif',
-                   basePath + 'S60.tif',
-                   basePath + 'S70.tif',
-                   basePath + 'S80.tif']).get()  # .get() to wait for the request to finish
+        filepaths=files).get()  # .get() to wait for the request to finish
 
     abba.mp.selectSlice(abba.mp.getSlices())  # select all
 
     abba.register_deepslice(channels=[0]).get()
     abba.register_deepslice(channels=[0]).get()
+
+    abba.register_elastix_affine(atlas_image_channels=[0, 1],
+                                 slice_image_channels=[0, 1]).get()
+
+    abba.register_elastix_spline(
+        nb_control_points=5,
+        atlas_image_channels=[0, 1],
+        slice_image_channels=[0, 1],
+        pixel_size_micrometer=40).get()
+
+    abba.register_elastix_spline(
+        nb_control_points=12,
+        atlas_image_channels=[0, 1],
+        slice_image_channels=[0, 1],
+        pixel_size_micrometer=20).get()
 
     time.sleep(25000)  # Humm, because ij closes immediately if the python process is finished (dirty workaround)
