@@ -4,7 +4,6 @@ from jpype.types import JString, JArray
 import os, shutil
 import imagej
 
-
 def getJavaDependencies():
     """
     Returns the jar files that need to be included into the classpath
@@ -61,19 +60,6 @@ class Abba:
                 Abba.opened_atlases[atlas_name] = atlas
 
         self.atlas = Abba.opened_atlases[atlas_name]
-
-        # Initialising ImageJ, if not already initialised
-        # Makes the atlas object
-        # if atlas is not None:
-        #    self.atlas = atlas
-        #    from abba.abba_private import AbbaAtlas
-        #    self.convertedAtlas = AbbaAtlas(self.atlas, ij)
-        #    self.convertedAtlas.initialize(None, None)
-        #    # Puts it in the scijava ObjectService for automatic discovery if necessary
-        #    ij.object().addObject(self.convertedAtlas)
-
-        # Starts ABBA
-
         self.slicing_mode = slicing_mode
         self.atlas_name = atlas_name
 
@@ -112,6 +98,7 @@ class Abba:
             # TODO: make sure it is visible
             pass
 
+    # ------------------------ IMPORT
     def import_from_files(self, z_location=0, z_increment=0.02, split_rgb=False, filepaths=[]):
         """
 
@@ -154,6 +141,18 @@ class Abba:
                                      "increment_between_slices", z_increment \
                                      )
 
+    # ------------------------ SLICE SELECTION
+    def select_all_slices(self):
+        self.mp.selectSlice(self.mp.getSlices())  # select all
+
+    def get_n_slices(self):
+        return self.mp.getSlices().size()
+
+    def select_slice(self, indices):
+        for index in indices:
+            self.mp.selectSlice(self.mp.getSlices().get(index))  # select the last slice
+
+    # ------------------------ REGISTRATION
     def register_deepslice(self,
                            channels=[0],
                            allow_slicing_angle_change=True,
