@@ -11,6 +11,7 @@ from abba import Abba
 def downloadIfNecessary(basePath, section_name):
     outputPath = Path(basePath + section_name)
     if not outputPath.exists():
+        utils.check_internet_connection()
         url = 'https://zenodo.org/record/6592478/files/' + section_name + '?download=1'
         utils.retrieve_over_http(url, outputPath)
     else:
@@ -18,25 +19,24 @@ def downloadIfNecessary(basePath, section_name):
 
 demo_sections = [
     'S00.tif',
-    'S05.tif',
+#    'S05.tif',
     'S10.tif',
-    'S15.tif',
+#    'S15.tif',
     'S20.tif',
-    'S25.tif',
+#    'S25.tif',
     'S30.tif',
-    'S35.tif',
+#    'S35.tif',
     'S40.tif',
-    'S45.tif',
+#    'S45.tif',
     'S50.tif',
-    'S55.tif',
+#    'S55.tif',
     'S60.tif',
-    'S65.tif',
+#    'S65.tif',
     'S70.tif',
-    'S75.tif',
+#    'S75.tif',
     'S80.tif']
 
 def download_test_images(basePath):
-    utils.check_internet_connection()
     [downloadIfNecessary(basePath, section) for section in demo_sections]
 
 
@@ -56,13 +56,20 @@ if __name__ == '__main__':
     # all registrations are performed on the selected slices.
     # since we want to register all of them, we select all of them
     abba.select_all_slices()
+    # we want to avoid saturation in the display. This does not matter for
+    # all registration methods EXCEPT DeepSlice, which takes rgb images
+    abba.change_display_settings(0, 0, 500)
+    abba.change_display_settings(1, 0, 1200)
 
     # first deepslice registration round : possible because it's the Allen CCF atlas, cut in coronal mode
     # what's assumed : the sections are already in the correct order
-    abba.register_deepslice(channels=[0]).get()
+    # only the dapi channel is used for the registration
+    # TODO : rescale rgb channels min max values
+    abba.register_deepslice(channels=[0, 1]).get()
+
     # second deepslice registration: it's fast, and because the new position is resampled,
     # we usually get slightly better positioning along z
-    abba.register_deepslice(channels=[0]).get()
+    abba.register_deepslice(channels=[0, 1]).get()
 
     # a round of elastix registration, affine
     # the channel 0 of the dataset (DAPI) is registered with the Nissl Channel of the atlas (0)
@@ -74,11 +81,11 @@ if __name__ == '__main__':
     # a round of elastix registration, affine
     # same channels as in the affine registration
     # 5 control points along x = very coarse spline (and thus maybe unnecessary)
-    abba.register_elastix_spline(
-        nb_control_points=5,
-        atlas_image_channels=[0, 1],
-        slice_image_channels=[0, 1],
-        pixel_size_micrometer=40).get()
+    #abba.register_elastix_spline(
+    #    nb_control_points=5,
+    #    atlas_image_channels=[0, 1],
+    #    slice_image_channels=[0, 1],
+    #    pixel_size_micrometer=40).get()
 
     # a round of elastix registration, affine
     # same channels as in the affine registration

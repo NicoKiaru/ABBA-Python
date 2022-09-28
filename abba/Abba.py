@@ -154,7 +154,7 @@ class Abba:
 
     # ------------------------ REGISTRATION
     def register_deepslice(self,
-                           channels=[0],
+                           channels,
                            allow_slicing_angle_change=True,
                            allow_change_slicing_position=True,
                            maintain_slices_order=True,
@@ -191,7 +191,7 @@ class Abba:
 
         # Any missing input parameter will lead to a popup window asking the missing argument to the user
         return self.ij.command().run(RegistrationDeepSliceCommand, True,
-                                     "slices_string_channels", JString(''.join(map(str, channels))),
+                                     "slices_string_channels", JString(','.join(map(str, channels))),
                                      "image_name_prefix", JString('Section'),
                                      "mp", self.mp,
                                      "allow_slicing_angle_change", allow_slicing_angle_change,
@@ -216,8 +216,8 @@ class Abba:
                          "pixel_size_micrometer", pixel_size_micrometer, \
                          "show_imageplus_registration_result", show, \
                          "background_offset_value_moving", 0, \
-                         "atlas_image_channels", JString(''.join(map(str, atlas_image_channels))), \
-                         "slice_image_channels", JString(''.join(map(str, slice_image_channels))))  # second channel, 0-based
+                         "atlas_image_channels", JString(','.join(map(str, atlas_image_channels))), \
+                         "slice_image_channels", JString(','.join(map(str, slice_image_channels))))  # second channel, 0-based
 
     def register_elastix_spline(self,
                                 nb_control_points,
@@ -235,5 +235,10 @@ class Abba:
                          "pixel_size_micrometer", pixel_size_micrometer, \
                          "show_imageplus_registration_result", show, \
                          "background_offset_value_moving", 0, \
-                         "atlas_image_channels", JString(''.join(map(str, atlas_image_channels))), \
-                         "slice_image_channels", JString(''.join(map(str, slice_image_channels))))  # second channel, 0-based
+                         "atlas_image_channels", JString(','.join(map(str, atlas_image_channels))), \
+                         "slice_image_channels", JString(','.join(map(str, slice_image_channels))))  # second channel, 0-based
+
+    def change_display_settings(self, channel_index: int, min: float, max: float):
+        for slice in self.mp.getSlices():
+            if slice.isSelected():
+                slice.setDisplayRange(channel_index, min, max)

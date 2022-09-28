@@ -7,3 +7,5 @@
 /deepslice/utilities/adult_to_p28_test.xml.xml
 /deepslice/utilities/C110_deepslice2.xml
 /temp/
+*.log
+*.json
