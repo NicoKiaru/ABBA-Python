@@ -56,9 +56,13 @@ if __name__ == '__main__':
     # all registrations are performed on the selected slices.
     # since we want to register all of them, we select all of them
     abba.select_all_slices()
+    time.sleep(5)
+
+    time.sleep(250)
     # we want to avoid saturation in the display. This does not matter for
     # all registration methods EXCEPT DeepSlice, which takes rgb images
     abba.change_display_settings(0, 0, 500)
+
     abba.change_display_settings(1, 0, 1200)
 
     # first deepslice registration round : possible because it's the Allen CCF atlas, cut in coronal mode
