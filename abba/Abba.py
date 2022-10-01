@@ -53,9 +53,9 @@ class Abba:
                 atlas = ij.command().run(WaxholmSpragueDawleyRatV4Command, True).get().getOutput("ba")
                 Abba.opened_atlases[atlas_name] = atlas
             else:
-                bg_atlas = BrainGlobeAtlas("allen_mouse_25um")
-                from abba.abba_private import \
-                    AbbaAtlas  # delayed import because the jvm should be correctly initialized
+                bg_atlas = BrainGlobeAtlas(atlas_name)
+                from abba.abba_private import AbbaAtlas  # delayed import because the jvm should be correctly
+                # initialized
                 atlas = AbbaAtlas(bg_atlas, ij)
                 atlas.initialize(None, None)
                 Abba.opened_atlases[atlas_name] = atlas

@@ -10,6 +10,7 @@ AtlasHelper = jimport('ch.epfl.biop.atlas.struct.AtlasHelper')
 AtlasMap = jimport('ch.epfl.biop.atlas.struct.AtlasMap')
 BdvFunctions = jimport('bdv.util.BdvFunctions')
 BdvOptions = jimport('bdv.util.BdvOptions')
+SourceVoxelProcessor = jimport('ch.epfl.biop.sourceandconverter.SourceVoxelProcessor')
 
 @JImplements(AtlasMap)
 class AbbaMap(object):
@@ -64,6 +65,7 @@ class AbbaMap(object):
 
         image_keys = ArrayList()
         image_keys.add(JString('reference'))
+        image_keys.add(JString('borders'))
         image_keys.add(JString('X'))
         image_keys.add(JString('Y'))
         image_keys.add(JString('Z'))
@@ -71,6 +73,7 @@ class AbbaMap(object):
 
         structural_images = {
             'reference': reference_sac,
+            'borders': SourceVoxelProcessor.getBorders(self.annotation_sac),
             'X': AtlasHelper.getCoordinateSac(0, JString('X')),
             'Y': AtlasHelper.getCoordinateSac(1, JString('Y')),
             'Z': AtlasHelper.getCoordinateSac(2, JString('Z')),
