@@ -65,26 +65,36 @@ class AbbaMap(object):
 
         image_keys = ArrayList()
         image_keys.add(JString('reference'))
+        for extra_channel in self.atlas.metadata['additional_references']:
+            image_keys.add(JString(extra_channel))
         image_keys.add(JString('borders'))
         image_keys.add(JString('X'))
         image_keys.add(JString('Y'))
         image_keys.add(JString('Z'))
         image_keys.add(JString('Left Right'))
 
-        structural_images = {
-            'reference': reference_sac,
-            'borders': SourceVoxelProcessor.getBorders(self.annotation_sac),
-            'X': AtlasHelper.getCoordinateSac(0, JString('X')),
-            'Y': AtlasHelper.getCoordinateSac(1, JString('Y')),
-            'Z': AtlasHelper.getCoordinateSac(2, JString('Z')),
-            'Left Right': left_right_sac
-        }  # return Map<String,SourceAndConverter>
+        structural_images = dict()
+        self.maxValues = dict()
+        structural_images['reference'] = reference_sac
+        self.maxValues['reference'] = JDouble(np.max(self.atlas.reference) * 2)
+        for extra_channel in self.atlas.metadata['additional_references']:
+            bss = BdvFunctions.show(self.ij.py.to_java(self.atlas.additional_references[extra_channel]),
+                                    JString(self.atlas.atlas_name + '_' + extra_channel),
+                                    BdvOptions.options().sourceTransform(affine_transform))
+            structural_images[extra_channel] = bss.getSources().get(0)
+            bss.getBdvHandle().close()
+            self.maxValues[extra_channel] = JDouble(np.max(self.atlas.additional_references[extra_channel]) * 2)
+        structural_images['borders'] = SourceVoxelProcessor.getBorders(self.annotation_sac)
+        self.maxValues['borders'] = 256 # we know this one.
+        structural_images['X'] = AtlasHelper.getCoordinateSac(0, JString('X'))
+        structural_images['Y'] = AtlasHelper.getCoordinateSac(1, JString('Y'))
+        structural_images['Z'] = AtlasHelper.getCoordinateSac(2, JString('Z'))
+        structural_images['Left Right'] = left_right_sac # return Map<String,SourceAndConverter>
 
         self.atlas_resolution_in__mm = atlas_resolution_in__mm
         self.affine_transform = affine_transform
         self.image_keys = image_keys
         self.structural_images = structural_images
-        self.maxReference = JDouble(np.max(self.atlas.reference) * 2)
 
     @JOverride
     def getDataSource(self):
@@ -112,7 +122,7 @@ class AbbaMap(object):
 
     @JOverride
     def getImageMax(self, key):
-        return self.maxReference  # double
+        return self.maxValues[key]
 
     @JOverride
     def labelRight(self):

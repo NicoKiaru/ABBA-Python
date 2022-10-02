@@ -2,6 +2,8 @@
 
 import time
 from bg_atlasapi.bg_atlas import BrainGlobeAtlas
+from bg_atlasapi import show_atlases
+
 
 import os
 from bg_atlasapi import utils
@@ -41,9 +43,12 @@ def download_test_images(basePath):
 
 
 if __name__ == '__main__':
-    # abba = Abba("allen_mouse_25um") # any BrainGlobe atlas
-    abba = Abba('Adult Mouse Brain - Allen Brain Atlas V3')
+    show_atlases()
+    #time.sleep(10000)
+    abba = Abba("azba_zfish_4um")#"allen_mouse_25um") # any BrainGlobe atlas
+    # abba = Abba('Adult Mouse Brain - Allen Brain Atlas V3')
     abba.show_bdv_ui()  # creates and show a bdv view
+    time.sleep(36000)  # Humm, because ij
 
     # download test sections
     basePath = os.getcwd() + '/images/'
