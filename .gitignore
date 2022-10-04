@@ -1,4 +1,9 @@
-.ipynb_checkpoints/
-notebooks/images/
-*.tiff
-*.bfmemo
+/images/
+/.idea/
+*.iml
+/.ipynb_checkpoints/
+/deepslice/NN_weights/
+/temp/
+*.log
+*.json
+/notebooks/.ipynb_checkpoints/

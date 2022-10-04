@@ -1,11 +1,27 @@
-name: abba-brainglobe
+# You really need to use mamba or this env will need a year to be created
+# Also : some dependencies explicit versions are kept, mostly these are obtained
+# by trimming down the deepslice envs examples:
+# https://github.com/PolarBean/DeepSlice/tree/master/conda_environments
+name: abba-brainglobe-deepslice-itk
 channels:
   - conda-forge
   - defaults
 dependencies:
+  - mkl=2020.2
+  - numpy
+  - pandas
+  - pip
+  - protobuf
+  - scikit-image=0.17.2
+  - scikit-learn=0.23.2
+  - scipy=1.6.0
+  - tensorflow
+  - tqdm=4.56.0
   - jupyter
   - pyimagej
   - python
-  - napari[all]
+  - h5py=2.10.0 # seems strictly required for deepslice
+  - bg-atlasapi
+  - openjdk=8 # 8 or 11 should work
   - pip:
-    - bg-atlasapi
+    - itk-elastix # WIP : use elastix from python
