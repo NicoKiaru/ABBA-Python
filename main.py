@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
     # import sections into ABBA
     files = [basePath + section for section in demo_sections]
-    abba.import_from_files(filepaths=files).get()  # .get() to wait for the request to finish
+    abba.import_from_files(filepaths=files)
     # all registrations are performed on the selected slices.
     # since we want to register all of them, we select all of them
     abba.select_all_slices()
@@ -100,14 +100,14 @@ if __name__ == '__main__':
                                         channels_atlas_csv='0,1',
                                         pixel_size_micrometer=40)
 
-    # optional: a round of elastix registration, affine
+    # optional: a round of elastix registration, spline
     # same channels as in the affine registration
     # 5 control points along x = very coarse spline (and thus maybe unnecessary)
     # abba.register_elastix_spline(
     #    nb_control_points=5,
     #    atlas_image_channels=[0, 1],
     #    slice_image_channels=[0, 1],
-    #    pixel_size_micrometer=40).get()
+    #    pixel_size_micrometer=40)
 
     # a round of elastix registration, affine
     # same channels as in the affine registration

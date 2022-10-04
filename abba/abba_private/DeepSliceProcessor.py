@@ -33,7 +33,7 @@ def check_model_is_present():
     path_to_model = get_deepslice_path() + "/NN_weights"
     if not os.path.isdir(path_to_model):
         print('DeepSlice model not present, 240 Mb will be downloaded ')
-        os.mkdir(path_to_model)
+        os.makedirs(path_to_model)
     model_files = ['/Allen_Mixed_Best.h5',
                    '/Synthetic_data_final.hdf5',
                    '/xception_weights_tf_dim_ordering_tf_kernels.h5']
