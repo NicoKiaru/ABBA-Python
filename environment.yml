@@ -2,26 +2,30 @@
 # Also : some dependencies explicit versions are kept, mostly these are obtained
 # by trimming down the deepslice envs examples:
 # https://github.com/PolarBean/DeepSlice/tree/master/conda_environments
-name: abba-brainglobe-deepslice-itk
+# and fixing issues as mentioned in the explicit versions below
+# it seems to work with for win64 machine
+name: abba-brainglobe-deepslice
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - mkl=2020.2
+  - mkl
   - numpy
   - pandas
   - pip
   - protobuf
-  - scikit-image=0.17.2
-  - scikit-learn=0.23.2
-  - scipy=1.6.0
-  - tensorflow=1.15 # Compulsory apparently
-  - tqdm=4.56.0
+  - scikit-image
+  - scikit-learn
+  - scipy
+  - tensorflow=1.14.0 # modif 1: other wise the predictions from DeepSlice are bad with nan values everywhere
+  - tqdm
   - jupyter
   - pyimagej
   - python
-  - h5py=2.10.0 # seems strictly required for deepslice
+  - xarray
+  - h5py=2.10.0 # modif 2: seems required for deepslice, otherwise a keras decode utf8 error is raiser
   - bg-atlasapi
-  - openjdk=8 # 8 or 11 should work
-  - pip:
-    - itk-elastix # WIP : use elastix from python
+  - openssl=1.1.1q # modif 3: dll not loaded error with netcdf4 on windows
+  - openjdk=8 # 8 or 11 should work, pyimagej not tested for version above
+  - netcdf4
+    
