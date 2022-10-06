@@ -1,7 +1,7 @@
 /images/
 /.idea/
 *.iml
-/.ipynb_checkpoints/
+.ipynb_checkpoints/
 /deepslice/NN_weights/
 /temp/
 *.log
