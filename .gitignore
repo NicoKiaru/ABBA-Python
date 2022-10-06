@@ -7,3 +7,4 @@
 *.log
 *.json
 /notebooks/.ipynb_checkpoints/
+__pycache__/
