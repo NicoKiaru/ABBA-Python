@@ -1,8 +1,8 @@
-# ABBA-Python / Gumby
+# [ABBA](https://biop.github.io/ijp-imagetoatlas/)-Python / Gumby
 
 This repository demoes how to use [ABBA](https://biop.github.io/ijp-imagetoatlas/) with python by using [PyImageJ](https://github.com/imagej/pyimagej) and [JPype](https://github.com/jpype-project/jpype).
 
-# DeepSlice
+# [DeepSlice](https://github.com/PolarBean/DeepSlice)
 
 If you want to register mouse brain sections to the Allen Brain Atlas, ABBA-Python also includes [DeepSlice](https://github.com/PolarBean/DeepSlice), a powerful deep learning tool which can be used for automatic registration of coronal sections of mouse brains. 
 
