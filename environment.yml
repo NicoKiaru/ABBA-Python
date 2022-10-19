@@ -28,4 +28,8 @@ dependencies:
   - openssl=1.1.1q # modif 3: dll not loaded error with netcdf4 on windows
   - openjdk=8 # 8 or 11 should work, pyimagej not tested for version above
   - netcdf4
-    
+  - pip:
+    # works for regular pip packages
+    - ipywidgets
+    - ipyfilechooser
+  
