@@ -20,7 +20,7 @@ def get_java_dependencies():
     """
     imagej_core_dep = 'net.imagej:imagej:2.9.0'
     imagej_legacy_dep = 'net.imagej:imagej-legacy:0.39.2'
-    abba_dep = 'ch.epfl.biop:ImageToAtlasRegister:0.3.6'
+    abba_dep = 'ch.epfl.biop:ImageToAtlasRegister:0.3.7'
     return [imagej_core_dep, imagej_legacy_dep, abba_dep]
 
 
@@ -56,15 +56,20 @@ class Abba:
             atlas_name: str = 'Adult Mouse Brain - Allen Brain Atlas V3',
             ij=None,
             slicing_mode: str = 'coronal',  # or sagittal or horizontal
-            headless: bool = False
+            headless: bool = False,
+            enable_jupyter_ui: bool = False
     ):
         if ij is None:
             if headless:
                 ij = imagej.init(get_java_dependencies())
+                if enable_jupyter_ui:
+                    # below : experimental UI, uses ipywidgets instead of ImageJ's swing UI (very partial functionality)
+                    from scijava_python_command import enable_jupyter_ui
+                    enable_jupyter_ui()
             else:
                 ij = imagej.init(get_java_dependencies(), mode='interactive')
+            ij.ui().showUI()
             self.ij = ij
-            ij.ui().showUI()  # required I fear
         else:
             print('ij was provided, headless argument ignored')
             self.ij = ij
