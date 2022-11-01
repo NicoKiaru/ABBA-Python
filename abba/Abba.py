@@ -64,7 +64,7 @@ class Abba:
                 ij = imagej.init(get_java_dependencies())
                 if enable_jupyter_ui:
                     # below : experimental UI, uses ipywidgets instead of ImageJ's swing UI (very partial functionality)
-                    from scijava_python_command import enable_jupyter_ui
+                    from scijava_python_command.jupyter_ui import enable_jupyter_ui
                     enable_jupyter_ui()
             else:
                 ij = imagej.init(get_java_dependencies(), mode='interactive')
@@ -115,7 +115,7 @@ class Abba:
                                    'ba', self.atlas
                                    ).get().getOutput('mp')
 
-    def ij(self):
+    def get_ij(self):
         """
         Provides the ImageJ instance that can be reused to create another Abba instance
         :return:
@@ -184,6 +184,9 @@ class Abba:
     # ------------------------ SLICE SELECTION
     def select_all_slices(self):
         self.mp.selectSlice(self.mp.getSlices())  # select all
+
+    def deselect_all_slices(self):
+        self.mp.deselectSlice(self.mp.getSlices())  # select all
 
     def get_n_slices(self):
         return self.mp.getSlices().size()

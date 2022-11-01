@@ -1,26 +1,23 @@
 import threading
-import time
-import asyncio
 import ipywidgets as widgets
 from IPython.display import display
 from scyjava import jimport
 from jpype import JImplements, JOverride
 from jpype.types import JString, JBoolean, JDouble, JInt, JFloat
 
-from jupyter_ui_poll import run_ui_poll_loop, ui_events, with_ui_events
-
 from ipyfilechooser import FileChooser
 import logging
 
 logger = logging.getLogger('ScijavaJupyterUI')
 
-PyPreprocessor = jimport('org.scijava.processor.PyPreprocessor')
 Consumer = jimport('java.util.function.Consumer')
 Supplier = jimport('java.util.function.Supplier')
 JFile = jimport('java.io.File')
+PyPreprocessor = jimport('org.scijava.processor.PyPreprocessor')
 
 
 def enable_jupyter_ui():
+    PyPreprocessor = jimport('org.scijava.processor.PyPreprocessor')
     PyPreprocessor.register(IPyWidgetCommandPreprocessorSupplier())
     print('Scijava jupyter ui enabled')
 
@@ -38,74 +35,37 @@ class IPyWidgetCommandPreprocessor(object):
             if not module.isInputResolved(input_key):
                 logger.debug('Unresolved input: ' + str(input_key))
                 current_widget = get_jupyter_widget(module, input_key)
-                logger.debug('Widget acquired for input ' + str(input_key))
                 if current_widget is not None:
+                    logger.debug('Widget acquired for input ' + str(input_key))
                     self.all_widgets[input_key] = current_widget
                 else:
                     # maybe log something or put a warning
+                    logger.debug('Widget not found for input ' + str(input_key))
                     pass
 
         if len(self.all_widgets) != 0:
             list_of_widgets = [x.get_widget() for key, x in self.all_widgets.items()]
 
             # Creates an OK button, and its associated event
-            self.user_has_clicked = False
+            user_has_clicked = threading.Event()
             ok_button = widgets.Button(description='OK')
-            ok_button.on_click(self.process_click)
+            ok_button.on_click(lambda _: user_has_clicked.set())
             list_of_widgets.append(ok_button)
             logger.debug('Display widgets module ' + str(module))
             display(widgets.VBox(list_of_widgets))
             logger.debug('Waiting for click')
-            logger.debug('sleeping')
-            # time.sleep(20)
-            # logger.debug('done sleeping')
-            # self.user_has_clicked.wait()
-            # https://github.com/Kirill888/jupyter-ui-poll
 
-            # with ui_events() as ui_poll:
-            #    while not self.user_has_clicked:
-            #        print(self.user_has_clicked, end="")
-            #        ui_poll(10)  # Process upto 11 ui events per iteration
-            #        time.sleep(0.1)
-
-            dt = run_ui_poll_loop(lambda _: print('coucou'), 1 / 15)
-
-            # for i in with_ui_events(range(55), 10): #with ui_events() as ui_poll:
-            #    logger.debug('in loop')
-            #    if self.user_has_clicked: #int(btn.description) >= 5:
-            #        print("✋", end="")
-            #        break  # Test early exit
-            #    print(self.user_has_clicked, end="")  # Verify UI state changes
-            #    time.sleep(0.1)
-            # await asyncio.sleep(0.1)  # Simulate Async computation
-            # while not self.user_has_clicked: #int(ok_button.description) < 1:
-            #    #print(btn.description, end="")
-            #    logger.debug('0')
-            #    await ui_poll(11)  # Process upto 11 ui events per iteration
-            #    logger.debug('1')
-            #    await asyncio.sleep(0.1)  # Simulate async processing
-            #    # time.sleep(0.1)
-            #    logger.debug('2')
-
+            # Wait for button click
+            user_has_clicked.wait()
             logger.debug('button clicked')
 
-            # https://ipywidgets.readthedocs.io/en/stable/examples/Widget%20Asynchronous.html
-
-    def process_click(self, target):
-
-        # logger.debug('Wait for click module ' + str(self.module))
-        # Wait for button click
-
-        logger.debug('The user has clicked ' + str(self.module))
-        # the user has clicked
-        self.user_has_clicked = True  # .set()
-        logger.debug('Click event set ' + str(self.module))
-        # retrieve contents of all widgets:
-        for key, w in self.all_widgets.items():
-            logger.debug('Resolving input ' + str(key))
-            self.module.setInput(key, w.get_value())
-            self.module.resolveInput(key)
-            logger.debug('Input ' + str(key) + " resolved")
+            # the user has clicked
+            # retrieve contents of all widgets:
+            for key, w in self.all_widgets.items():
+                logger.debug('Resolving input ' + str(key))
+                module.setInput(key, w.get_value())
+                module.resolveInput(key)
+                logger.debug('Input ' + str(key) + " resolved")
 
 
 @JImplements(Supplier)
