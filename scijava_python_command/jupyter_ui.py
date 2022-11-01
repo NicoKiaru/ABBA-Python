@@ -241,13 +241,21 @@ class JupyterFileWidget(JupyterInputWidget):
             self.save = False
 
             # Create and display a FileChooser widget
-            fc = FileChooser()
+            fc = FileChooser(select_default=True)
             # Change the title
             fc.title = getLabel(module, input_key)
 
             if 'directory' in styles:
                 # Switch to folder-only mode
                 fc.show_only_dirs = True
+                if module.getInput(input_key) is not None:
+                    fc.default_path = str(module.getInput(input_key))
+                    fc.reset()
+            else:
+                if module.getInput(input_key) is not None:
+                    fc.default_path = str(module.getInput(input_key).getParent())
+                    fc.default_filename = str(module.getInput(input_key).getName())
+                    fc.reset()
 
             matching_extensions = [s for s in styles if 'extensions:' in s]
             if len(matching_extensions) == 1:
