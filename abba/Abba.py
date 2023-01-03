@@ -19,8 +19,8 @@ def get_java_dependencies():
     :return:
     """
     imagej_core_dep = 'net.imagej:imagej:2.9.0'
-    imagej_legacy_dep = 'net.imagej:imagej-legacy:0.39.2'
-    abba_dep = 'ch.epfl.biop:ImageToAtlasRegister:0.3.7'
+    imagej_legacy_dep = 'net.imagej:imagej-legacy:0.39.3'
+    abba_dep = 'ch.epfl.biop:ImageToAtlasRegister:0.4.0'
     return [imagej_core_dep, imagej_legacy_dep, abba_dep]
 
 

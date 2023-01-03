@@ -31,7 +31,7 @@ SimpleRegistrationWrapper = jimport('ch.epfl.biop.atlas.aligner.plugin.SimpleReg
 
 
 @JImplements(SimpleABBARegistrationPlugin)
-class SimpleRotateAffineRegistration(object):
+class ITKRigidRegistration(object):
 
     def __init__(self, ij):
         print('init SimpleRotateAffineRegistration')
@@ -94,7 +94,7 @@ class SimpleRotateAffineRegistration(object):
 
 
 @JImplements(Supplier)
-class SimpleRotateAffineRegistrationSupplier(object):
+class ITKRigidRegistrationSupplier(object):
 
     def __init__(self, ij):
         self.ij = ij
@@ -102,16 +102,16 @@ class SimpleRotateAffineRegistrationSupplier(object):
 
     @JOverride
     def get(self):
-        return SimpleRegistrationWrapper(JString('SimpleRotateAffineRegistration'),
-                                         SimpleRotateAffineRegistration(self.ij))
+        return SimpleRegistrationWrapper(JString('ITKRigidRegistration'),
+                                         ITKRigidRegistration(self.ij))
 
 
 def add_abba_itk_registrations(ij):
-    MultiSlicePositioner.registerRegistrationPlugin('SimpleRotateAffineRegistration',
-                                                    SimpleRotateAffineRegistrationSupplier(ij))
+    MultiSlicePositioner.registerRegistrationPlugin('ITKRigidRegistration',
+                                                    ITKRigidRegistrationSupplier(ij))
 
     @ScijavaCommand(context=ij.context(),  # ij context needed
-                    name='abba.SimpleRotateAffineRegistration')
+                    name='ITK - Rigid Registration')
     @ScijavaInput('fixed_channel', JInt,
                   label='Atlas channel index:', description='')
     @ScijavaInput('moving_channel', JInt,
@@ -121,10 +121,10 @@ def add_abba_itk_registrations(ij):
     class SimpleRotateAffineRegistrationCommand:
         def run(self):
             params = HashMap()
-            self.mp.registerSelectedSlices('SimpleRotateAffineRegistration',
+            self.mp.registerSelectedSlices('ITKRigidRegistration',
                                            SourcesChannelsSelect(self.fixed_channel),
                                            SourcesChannelsSelect(self.moving_channel),
                                            params)
 
-    MultiSlicePositioner.registerRegistrationPluginUI('SimpleRotateAffineRegistration',
-                                                      'abba.SimpleRotateAffineRegistration');
+    MultiSlicePositioner.registerRegistrationPluginUI('ITKRigidRegistration',
+                                                      'ITK - Rigid Registration');
