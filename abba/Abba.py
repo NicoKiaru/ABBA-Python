@@ -80,13 +80,17 @@ class Abba:
         # or in python
         if atlas_name not in Abba.opened_atlases:
             if atlas_name == 'Adult Mouse Brain - Allen Brain Atlas V3':
+                atlas_name = 'Adult Mouse Brain - Allen Brain Atlas V3p1'
+            if atlas_name == 'Rat - Waxholm Sprague Dawley V4':
+                atlas_name = 'Rat - Waxholm Sprague Dawley V4p1'
+            if atlas_name == 'Adult Mouse Brain - Allen Brain Atlas V3p1':
                 AllenBrainAdultMouseAtlasCCF2017Command = jimport(
-                    'ch.epfl.biop.atlas.mouse.allen.ccfv3.command.AllenBrainAdultMouseAtlasCCF2017Command')
+                    'ch.epfl.biop.atlas.mouse.allen.ccfv3p1.command.AllenBrainAdultMouseAtlasCCF2017v3p1Command')
                 atlas = ij.command().run(AllenBrainAdultMouseAtlasCCF2017Command, True).get().getOutput("ba")
                 Abba.opened_atlases[atlas_name] = atlas
-            elif atlas_name == 'Rat - Waxholm Sprague Dawley V4':
+            elif atlas_name == 'Rat - Waxholm Sprague Dawley V4p1':
                 WaxholmSpragueDawleyRatV4Command = jimport(
-                    'ch.epfl.biop.atlas.rat.waxholm.spraguedawley.v4.command.WaxholmSpragueDawleyRatV4Command')
+                    'ch.epfl.biop.atlas.rat.waxholm.spraguedawley.v4p1.command.WaxholmSpragueDawleyRatV4p1Command')
                 atlas = ij.command().run(WaxholmSpragueDawleyRatV4Command, True).get().getOutput("ba")
                 Abba.opened_atlases[atlas_name] = atlas
             else:
@@ -129,13 +133,17 @@ class Abba:
         """
         if not hasattr(self, 'bdv_view'):
             # no bdv view properties : creates a new one
-            SourceAndConverterServices = jimport('sc.fiji.bdvpg.services.SourceAndConverterServices')
             BdvMultislicePositionerView = jimport('ch.epfl.biop.atlas.aligner.gui.bdv.BdvMultislicePositionerView')
-            bdvh = SourceAndConverterServices.getBdvDisplayService().getNewBdv()
+            DefaultBdvSupplier = jimport('sc.fiji.bdvpg.bdv.supplier.DefaultBdvSupplier')
+            SerializableBdvOptions = jimport('sc.fiji.bdvpg.bdv.supplier.SerializableBdvOptions')
+            bdvh = DefaultBdvSupplier(SerializableBdvOptions()).get()
             self.bdv_view = BdvMultislicePositionerView(self.mp, bdvh)
         else:
             # TODO: make sure it is visible
             pass
+
+    def get_bdv_view(self):
+        return self.bdv_view
 
     # ------------------------ IMPORT
     def import_from_files(self, filepaths, z_location=0, z_increment=0.02, split_rgb=False):
