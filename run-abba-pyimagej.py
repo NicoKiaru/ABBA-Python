@@ -1,50 +1,10 @@
 # core dependencies
-import os
 import time
-from pathlib import Path
-
-# brainglobe dependencies
-from bg_atlasapi import show_atlases
-from bg_atlasapi import utils
 
 # abba dependency
 from abba import Abba
-
-# Demo dataset for automated slices registration
-zenodo_demo_slices_url = 'https://zenodo.org/record/6592478/files/'
-
-# Only one section every five section is used for this demo
-demo_sections = [
-    'S00.tif',
-    'S05.tif',
-    'S10.tif',
-    'S15.tif',
-    'S20.tif',
-    'S25.tif',
-    'S30.tif',
-    'S35.tif',
-    'S40.tif',
-    'S45.tif',
-    'S50.tif',
-    'S55.tif',
-    'S60.tif',
-    'S65.tif',
-    'S70.tif',
-    'S75.tif',
-    'S80.tif']
-
-
-def download_if_necessary(base_path, section_name):
-    output_path = Path(base_path + section_name)
-    if not output_path.exists():
-        utils.check_internet_connection()
-        url = zenodo_demo_slices_url + section_name + '?download=1'
-        utils.retrieve_over_http(url, output_path)
-
-
-def download_test_images(base_path):
-    [download_if_necessary(base_path, section) for section in demo_sections]
-
+# in order to wait for a jvm shutdown
+import jpype
 
 if __name__ == '__main__':
     # -- FOR DEBUGGING
@@ -67,4 +27,10 @@ if __name__ == '__main__':
     # --
 
     # everything will close 10 hours after the registration is done...
-    time.sleep(36000)  # Humm, because ij closes if the python process closes
+    # time.sleep(36000)  # Humm, because ij closes if the python process closes
+
+    # Wait for the JVM to shut down
+    while jpype.isJVMStarted():
+        time.sleep(1)
+
+    print("JVM has shut down")
