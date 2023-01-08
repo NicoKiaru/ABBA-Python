@@ -1,12 +1,12 @@
 from scyjava import jimport
-from deepslice.DeepSlice import DeepSlice
+from abba_python.deepslice import DeepSlice
 from jpype import JImplements, JOverride
 from jpype.types import JString
 import os
 
 import urllib.request
 from tqdm import tqdm
-from deepslice.DeepSlice import get_deepslice_path
+from abba_python.deepslice import get_deepslice_path
 
 # Import deepslice and make the function for the ABBA command
 Function = jimport('java.util.function.Function')

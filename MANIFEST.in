@@ -1,0 +1,3 @@
+
+include src/abba_python/deepslice/*.h5
+include src/abba_python/deepslice/*.hdf5

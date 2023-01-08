@@ -1,9 +1,9 @@
 from scyjava import jimport
 from jpype import JImplements, JOverride
-from jpype.types import JString, JBoolean, JDouble, JInt
+from jpype.types import JString, JDouble, JInt
 import os
 
-from scijava_python_command.command import ScijavaCommand, ScijavaInput, ScijavaOutput
+from abba_python.scijava_python_command import ScijavaCommand, ScijavaInput
 import itk
 import numpy as np
 import tempfile

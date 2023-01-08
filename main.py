@@ -4,11 +4,10 @@ import time
 from pathlib import Path
 
 # brainglobe dependencies
-from bg_atlasapi import show_atlases
 from bg_atlasapi import utils
 
-# abba dependency
-from abba import Abba
+# abba_python dependency
+from src.abba_python import Abba
 
 # Demo dataset for automated slices registration
 zenodo_demo_slices_url = 'https://zenodo.org/record/6592478/files/'
@@ -55,10 +54,10 @@ if __name__ == '__main__':
     # -- Atlas
     # Any brainglobe atlas can be used
     # show_atlases()
-    # abba = Abba("azba_zfish_4um", slicing_mode='sagittal', headless=True)  # or any other brainglobe atlas
+    # abba_python = Abba("azba_zfish_4um", slicing_mode='sagittal', headless=True)  # or any other brainglobe atlas
 
     # -- HEADLESS
-    # abba = Abba('Adult Mouse Brain - Allen Brain Atlas V3', headless=True)  # or any other brainglobe atlas
+    # abba_python = Abba('Adult Mouse Brain - Allen Brain Atlas V3', headless=True)  # or any other brainglobe atlas
     # --
 
     # -- NOT HEADLESS
@@ -103,7 +102,7 @@ if __name__ == '__main__':
     # optional: a round of elastix registration, spline
     # same channels as in the affine registration
     # 5 control points along x = very coarse spline (and thus maybe unnecessary)
-    # abba.register_elastix_spline(
+    # abba_python.register_elastix_spline(
     #    nb_control_points=5,
     #    atlas_image_channels=[0, 1],
     #    slice_image_channels=[0, 1],

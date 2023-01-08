@@ -1,8 +1,9 @@
 /images/
 /.idea/
+/dist/
 *.iml
 .ipynb_checkpoints/
-/deepslice/NN_weights/
+/src/abba_python/deepslice/NN_weights/
 /temp/
 *.log
 *.json

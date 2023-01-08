@@ -4,7 +4,7 @@
 # https://github.com/PolarBean/DeepSlice/tree/master/conda_environments
 # and fixing issues as mentioned in the explicit versions below
 # it seems to work with for win64 machine
-name: abba-brainglobe-deepslice
+name: abba_python-brainglobe-deepslice
 channels:
   - conda-forge
   - defaults

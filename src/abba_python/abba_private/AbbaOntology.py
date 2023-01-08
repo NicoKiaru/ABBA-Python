@@ -2,7 +2,7 @@ from scyjava import jimport
 from jpype import JImplements, JOverride
 from jpype.types import JString
 
-from abba.abba_private import AbbaAtlasNode
+from abba_python.abba_private import AbbaAtlasNode
 
 AtlasHelper = jimport('ch.epfl.biop.atlas.struct.AtlasHelper')
 AtlasOntology = jimport('ch.epfl.biop.atlas.struct.AtlasOntology')

@@ -39,10 +39,10 @@ class Abba:
         ImageJ instance, should be reused if you need to open several ABBA instances
         non setting this variable will create an ij instance with minimal dependencies
         If you want to provide your ij instance, make sure that it contains the dependencies
-        declared in abba.Abba.get_java_dependencies (and all the transitive ones)
+        declared in abba_python.Abba.get_java_dependencies (and all the transitive ones)
 
-        abba.ij() returns the current ij instance, which can also be reused in another
-        abba instance
+        abba_python.ij() returns the current ij instance, which can also be reused in another
+        abba_python instance
 
     slicing_mode :
         should be 'coronal', 'sagittal' or 'horizontal'
@@ -65,7 +65,7 @@ class Abba:
                 ij = imagej.init(get_java_dependencies())
                 if enable_jupyter_ui:
                     # below : experimental UI, uses ipywidgets instead of ImageJ's swing UI (very partial functionality)
-                    from scijava_python_command.jupyter_ui import enable_jupyter_ui
+                    from abba_python.scijava_python_command import enable_jupyter_ui
                     enable_jupyter_ui()
             else:
                 ij = imagej.init(get_java_dependencies(), mode='interactive')
@@ -95,7 +95,7 @@ class Abba:
                 Abba.opened_atlases[atlas_name] = atlas
             else:
                 bg_atlas = BrainGlobeAtlas(atlas_name)
-                from abba.abba_private import AbbaAtlas  # delayed import because the jvm should be correctly
+                from abba_python.abba_private import AbbaAtlas  # delayed import because the jvm should be correctly
                 # initialized
                 atlas = AbbaAtlas(bg_atlas, ij)
                 atlas.initialize(None, None)
@@ -110,7 +110,7 @@ class Abba:
         DebugTools = jimport('loci.common.DebugTools')
         DebugTools.enableLogging('OFF')
 
-        # Ok, let's create abba's model: mp = multipositioner
+        # Ok, let's create abba_python's model: mp = multipositioner
 
         ABBAStartCommand = jimport('ch.epfl.biop.atlas.aligner.command.ABBAStartCommand')  # Command import
 
@@ -184,7 +184,7 @@ class Abba:
 
     def prepare_deepslice_temp_folder(self):
         if not hasattr(self, '_run_deep_slice'):
-            from abba.abba_private.DeepSliceProcessor import DeepSliceProcessor
+            from abba_python.abba_private.DeepSliceProcessor import DeepSliceProcessor
             self._run_deep_slice = DeepSliceProcessor()
 
         # TODO : fix potential multiple running instance issues

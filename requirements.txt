@@ -1,0 +1,15 @@
+mkl
+numpy
+pandas
+pip
+protobuf
+scikit-image
+scikit-learn
+scipy
+tensorflow==1.14.0
+tqdm
+pyimagej
+xarray
+h5py==2.10.0
+bg-atlasapi
+netcdf4

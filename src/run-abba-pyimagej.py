@@ -1,8 +1,8 @@
 # core dependencies
 import time
 
-# abba dependency
-from abba import Abba
+# abba_python dependency
+from abba_python import Abba
 # in order to wait for a jvm shutdown
 import jpype
 
@@ -15,10 +15,10 @@ if __name__ == '__main__':
     # -- Atlas
     # Any brainglobe atlas can be used
     # show_atlases()
-    # abba = Abba("azba_zfish_4um", slicing_mode='sagittal', headless=True)  # or any other brainglobe atlas
+    # abba_python = Abba("azba_zfish_4um", slicing_mode='sagittal', headless=True)  # or any other brainglobe atlas
 
     # -- HEADLESS
-    # abba = Abba('Adult Mouse Brain - Allen Brain Atlas V3', headless=True)  # or any other brainglobe atlas
+    # abba_python = Abba('Adult Mouse Brain - Allen Brain Atlas V3', headless=True)  # or any other brainglobe atlas
     # --
 
     # -- NOT HEADLESS

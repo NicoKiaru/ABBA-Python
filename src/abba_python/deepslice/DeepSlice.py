@@ -16,15 +16,13 @@ import warnings
 from tensorflow.keras.applications.xception import Xception
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense
-from skimage import color, transform
+from skimage import color
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from deepslice.utilities.QuickNII_functions import pd_to_quickNII, XML_to_csv
-from deepslice.utilities import plane_alignment
+from abba_python.deepslice.utilities.QuickNII_functions import pd_to_quickNII, XML_to_csv
+from abba_python.deepslice.utilities import plane_alignment
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import HuberRegressor
-from scipy.stats import trim_mean
-from statistics import mean
 import re
 import imghdr
 import struct
