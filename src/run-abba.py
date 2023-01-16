@@ -6,12 +6,13 @@ from abba_python import Abba
 # in order to wait for a jvm shutdown
 import jpype
 
+
 if __name__ == '__main__':
     # -- FOR DEBUGGING
     # import imagej.doctor
     # imagej.doctor.checkup()
     # imagej.doctor.debug_to_stderr()
-
+    # Set jgo dir: https://github.com/scijava/jgo#usage
     # -- Atlas
     # Any brainglobe atlas can be used
     # show_atlases()

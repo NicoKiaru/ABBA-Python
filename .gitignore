@@ -4,7 +4,7 @@
 *.iml
 .ipynb_checkpoints/
 /src/abba_python/deepslice/NN_weights/
-/temp/
+/src/temp/
 *.log
 *.json
 /notebooks/.ipynb_checkpoints/

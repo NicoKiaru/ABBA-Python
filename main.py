@@ -9,6 +9,8 @@ from bg_atlasapi import utils
 # abba_python dependency
 from src.abba_python import Abba
 
+import jpype
+
 # Demo dataset for automated slices registration
 zenodo_demo_slices_url = 'https://zenodo.org/record/6592478/files/'
 
@@ -118,4 +120,8 @@ if __name__ == '__main__':
 
 
     # everything will close 10 hours after the registration is done...
-    time.sleep(36000)  # Humm, because ij closes if the python process closes
+    # Wait for the JVM to shut down
+    while jpype.isJVMStarted():
+        time.sleep(1)
+
+    print("JVM has shut down")

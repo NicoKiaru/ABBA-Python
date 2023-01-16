@@ -69,7 +69,6 @@ class Abba:
                     enable_jupyter_ui()
             else:
                 ij = imagej.init(get_java_dependencies(), mode='interactive')
-            ij.ui().showUI()
             self.ij = ij
         else:
             print('ij was provided, headless argument ignored')
@@ -146,6 +145,8 @@ class Abba:
             # TODO: make sure it is visible
             pass
 
+        self.ij.ui().showUI()
+
     def install_deepslice_bdv_ui(self):
 
         BdvScijavaHelper = jimport('sc.fiji.bdvpg.scijava.BdvScijavaHelper')
@@ -163,10 +164,8 @@ class Abba:
             @JOverride
             def run(self):
                 temp_folder = self.abba.prepare_deepslice_temp_folder()
-
                 RegisterSlicesDeepSliceCommand = jimport(
                     'ch.epfl.biop.atlas.aligner.command.RegisterSlicesDeepSliceCommand')
-
                 # Any missing input parameter will lead to a popup window asking the missing argument to the user
                 self.abba.ij.command().run(RegisterSlicesDeepSliceCommand, True,
                                            "image_name_prefix", JString('Section'),
@@ -204,7 +203,7 @@ class Abba:
                 #    shutil.rmtree(file_path)
             except Exception as e:
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
-
+        # print('Temp folder = '+str(temp_folder))
         return temp_folder
 
 

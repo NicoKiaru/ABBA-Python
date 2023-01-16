@@ -1,15 +1,11 @@
 ##very janky way to solve relative import problem
 import os
-
 from pathlib import Path
-
 # store ini paths
 ini_path = os.getcwd()
-
 ##set path to be the DeepSlice directory
 path = str(Path(__file__).parent)
 ##testing automated tests
-
 os.chdir(path)
 print(path)
 import warnings
@@ -29,7 +25,6 @@ import struct
 
 # restore path
 os.chdir(ini_path)
-
 
 def get_image_size(fname):
     # https://stackoverflow.com/questions/8032642/how-to-obtain-image-size-using-standard-python-class-without-using-external-lib

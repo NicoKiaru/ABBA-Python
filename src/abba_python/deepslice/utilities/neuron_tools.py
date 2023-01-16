@@ -1,5 +1,5 @@
 import numpy as np
-from utilities import QuickNII_functions 
+from abba_python.deepslice.utilities import QuickNII_functions
 import glob
 import pandas as pd
 def points_to_3d(points, plane):
