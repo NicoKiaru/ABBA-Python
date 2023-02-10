@@ -2,7 +2,7 @@ from scyjava import jimport
 from jpype import JImplements, JOverride
 from jpype.types import JString
 
-from abba_python.abba_private import AbbaAtlasNode
+from abba_python.abba_private.AbbaAtlasNode import AbbaAtlasNode
 
 AtlasHelper = jimport('ch.epfl.biop.atlas.struct.AtlasHelper')
 AtlasOntology = jimport('ch.epfl.biop.atlas.struct.AtlasOntology')
@@ -28,7 +28,7 @@ class AbbaOntology(object):
 
     @JOverride
     def initialize(self):
-        self.root_node = AbbaAtlasNode.AbbaAtlasNode(self.atlas, self.atlas.structures.tree.root, None)
+        self.root_node = AbbaAtlasNode(self.atlas, self.atlas.structures.tree.root, None)
         self.idToAtlasNodeMap = AtlasHelper.buildIdToAtlasNodeMap(self.root_node)
 
     @JOverride

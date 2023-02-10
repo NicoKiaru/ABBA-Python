@@ -2,7 +2,8 @@ from bg_atlasapi import BrainGlobeAtlas
 from scyjava import jimport
 from jpype import JImplements, JOverride
 from jpype.types import JString
-from abba_python.abba_private import AbbaOntology, AbbaMap
+from abba_python.abba_private.AbbaOntology import AbbaOntology
+from abba_python.abba_private.AbbaMap import AbbaMap
 
 ArrayList = jimport('java.util.ArrayList')
 Atlas = jimport('ch.epfl.biop.atlas.struct.Atlas')
