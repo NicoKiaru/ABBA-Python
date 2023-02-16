@@ -1,8 +1,9 @@
+from bg_atlasapi import BrainGlobeAtlas
+from bg_atlasapi.descriptors import STRUCTURES_FILENAME
 from scyjava import jimport
 from jpype import JImplements, JOverride
 from jpype.types import JString
 
-from abba_python.abba_private.AbbaAtlasNode import AbbaAtlasNode
 
 AtlasHelper = jimport('ch.epfl.biop.atlas.struct.AtlasHelper')
 AtlasOntology = jimport('ch.epfl.biop.atlas.struct.AtlasOntology')
@@ -19,8 +20,9 @@ class AbbaOntology(object):
     https://github.com/BIOP/ijp-atlas/blob/main/src/main/java/ch/epfl/biop/atlas/struct/AtlasOntology.java
     """
 
-    def __init__(self, bg_atlas):
+    def __init__(self, bg_atlas: BrainGlobeAtlas):
         self.atlas = bg_atlas
+        # bg_atlas.root_dir.
 
     @JOverride
     def getName(self):
@@ -28,7 +30,11 @@ class AbbaOntology(object):
 
     @JOverride
     def initialize(self):
-        self.root_node = AbbaAtlasNode(self.atlas, self.atlas.structures.tree.root, None)
+        BrainGlobeHelper = jimport('ch.epfl.biop.atlas.brainglobe.BrainGlobeHelper')
+        print(str(self.atlas.root_dir / STRUCTURES_FILENAME))
+        print(BrainGlobeHelper)
+        print(BrainGlobeHelper.buildTreeAndGetRoot)
+        self.root_node = BrainGlobeHelper.buildTreeAndGetRoot(JString(str(self.atlas.root_dir / STRUCTURES_FILENAME))) # AbbaAtlasNode(self.atlas, self.atlas.structures.tree.root, None)
         self.idToAtlasNodeMap = AtlasHelper.buildIdToAtlasNodeMap(self.root_node)
 
     @JOverride

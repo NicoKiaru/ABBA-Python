@@ -1,5 +1,4 @@
 # core dependencies
-import os
 import time
 
 from abba_python.Abba import enable_python_hooks, get_java_dependencies, add_brainglobe_atlases
@@ -8,6 +7,9 @@ from abba_python import Abba
 # in order to wait for a jvm shutdown
 import jpype
 import imagej
+
+import os
+import ctypes
 
 
 if __name__ == '__main__':
@@ -56,6 +58,32 @@ if __name__ == '__main__':
         Elastix.exePath = JString(str(elastixPath))
         Transformix = jimport('ch.epfl.biop.wrappers.transformix.Transformix')
         Transformix.exePath = JString(str(transformixPath))
+
+        # Now let's set the atlas folder location in a folder with all users access
+
+        AtlasLocationHelper = jimport('ch.epfl.biop.atlas.AtlasLocationHelper')
+        directory = os.path.join(os.environ['ProgramData'], 'abba-atlas')
+
+        # create the directory with write access for all users
+        try:
+            print('Attempt to set ABBA Atlas cache directory to ' + directory)
+            # //os.mkdir(directory)
+            os.makedirs(directory, exist_ok=True)
+
+            # Set directory permissions for all users
+            # p = ctypes.windll.kernel32.SetFileSecurityW(directory, 1, ctypes.c_void_p(0))
+            # if not p:
+            #    raise ctypes.WinError()
+            # else:
+            atlasPath = str(directory)
+            File = jimport('java.io.File')
+            AtlasLocationHelper.defaultCacheDir = File(JString(atlasPath))
+            print('ABBA Atlas cache directory set to ' + directory)
+        except OSError:
+            print('ERROR! Could not set ABBA Atlas cache dir')
+            # directory already exists
+            pass
+
 
 
     # --
