@@ -2,14 +2,11 @@
 import time
 
 from abba_python.Abba import enable_python_hooks, get_java_dependencies, add_brainglobe_atlases
-# abba_python dependency
-from abba_python import Abba
 # in order to wait for a jvm shutdown
 import jpype
 import imagej
 
 import os
-import ctypes
 
 
 if __name__ == '__main__':
@@ -46,7 +43,9 @@ if __name__ == '__main__':
 
     # loci.common.DebugTools.enableLogging("OFF");
     DebugTools = jimport('loci.common.DebugTools')
-    DebugTools.enableLogging('OFF')
+    # DebugTools.enableLogging('OFF')
+    DebugTools.enableLogging("INFO");
+    # DebugTools.enableLogging("DEBUG");
 
     import platform
     if platform.system() == 'Windows':
@@ -81,10 +80,10 @@ if __name__ == '__main__':
             print('ABBA Atlas cache directory set to ' + directory)
         except OSError:
             print('ERROR! Could not set ABBA Atlas cache dir')
-            # directory already exists
+            # directory already exists ?
             pass
-
-
+    else:
+        print('ERROR! '+platform.system()+' OS not supported yet.')
 
     # --
 

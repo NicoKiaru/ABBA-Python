@@ -9,3 +9,8 @@
 *.json
 /notebooks/.ipynb_checkpoints/
 __pycache__/
+/constructor/abba_python/
+/constructor/abba-pack-win.tar.gz
+/constructor/*.exe
+/temp/
+/constructor/win/elastix-5.0.1-win64/

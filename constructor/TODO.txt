@@ -1,0 +1,18 @@
+NOPE: fixed differently - Put itk in conda environment and registration methods
+COMPLICATED: Put atlases optionally with the installer
+TOO COMPLICATED: Solve issue with non interactive packaging ( = initialize  fiji in gui mode at the end ) -> test on Mac OSX
+TOO COMPLICATED: Check pkg is working
+Fix issue with metadata location ??
+Ship extra files with i
+Fix issue on startup / load atlases
+FIx very slow brainglobe conversion
+Put shortcut in a better place
+
+On laptop: - constructor-dev-fix is working
+
+add shortcut to C:\Users\nicol\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
+and to public desktop ?
+
+say it will be downloaded, and it takes time
+
+Put debug level warn
