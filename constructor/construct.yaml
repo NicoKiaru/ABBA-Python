@@ -1,6 +1,5 @@
 name: ABBA-Python
-version: 0.1
-installer_type: all
+version: 0.5.1
 
 channels:
   - conda-forge
@@ -23,7 +22,7 @@ specs:
   - h5py=2.10.0 # modif 2: seems required for deepslice, otherwise a keras decode utf8 error is raiser
   - bg-atlasapi=1.0.2
   - openssl=1.1.1q # modif 3: dll not loaded error with netcdf4 on windows
-  - openjdk=11 # 8 or 11 should work, pyimagej not tested for version above
+  - openjdk=8 # 8 or 11 should work, but java 11 has issues with xml
   - netcdf4=1.5.7
   - conda
   - console_shortcut # [win]
@@ -31,6 +30,8 @@ specs:
 
 register_python: false
 initialize_conda: false
+
+company: BIOP-EPFL
 
 extra_files:
   - abba-pack-win.tar.gz # [win]
@@ -41,3 +42,5 @@ icon_image: img/logo128x128.png # [win]
 
 post_install: post_install_unix.sh   # [unix]
 post_install: post_install_win.bat  # [win]
+
+# TODO : pre_uninstall to remove extra shortcuts in windows
