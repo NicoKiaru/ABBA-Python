@@ -231,7 +231,7 @@ class Abba:
                 Abba.opened_atlases[atlas_name] = atlas
             else:
                 bg_atlas = BrainGlobeAtlas(atlas_name)
-                from abba_python.abba_private import AbbaAtlas  # delayed import because the jvm should be correctly
+                from abba_python.abba_private.AbbaAtlas import AbbaAtlas  # delayed import because the jvm should be correctly
                 # initialized
                 atlas = AbbaAtlas(bg_atlas, ij)
                 atlas.initialize(None, None)
@@ -318,13 +318,13 @@ class Abba:
     def get_bdv_view(self):
         return self.bdv_view
 
-    def prepare_deepslice_temp_folder(self):
+    def prepare_deepslice_temp_folder(self): # TODO : remove
         if not hasattr(self, '_run_deep_slice'):
             from abba_python.abba_private.DeepSliceProcessor import DeepSliceProcessor
             self._run_deep_slice = DeepSliceProcessor()
 
         # TODO : fix potential multiple running instance issues
-        temp_folder = os.getcwd() + '/temp/deepslice/'
+        temp_folder = tempfile.gettempdir() + '/temp/deepslice/'
 
         # make sure that the folder exists
         if not os.path.exists(temp_folder):
@@ -411,7 +411,7 @@ class Abba:
                                   affine_transform=True
                                   ):
         # TODO : add option  to rescale brightness/contrast in parameters
-        if not self.atlas_name == 'Adult Mouse Brain - Allen Brain Atlas V3':
+        if not self.atlas_name.startswith('Adult Mouse Brain - Allen Brain Atlas V'):
             print('Deep Slice only support the Allen Brain Atlas CCFv3 in coronal slicing mode')
             return
 
@@ -419,7 +419,7 @@ class Abba:
             print('Deep Slice only support the Allen Brain Atlas CCFv3 in coronal slicing mode')
             return
 
-        temp_folder = self.abba.prepare_deepslice_temp_folder()
+        temp_folder = self.prepare_deepslice_temp_folder()
 
         RegisterSlicesDeepSliceCommand = jimport('ch.epfl.biop.atlas.aligner.command.RegisterSlicesDeepSliceCommand')
 
