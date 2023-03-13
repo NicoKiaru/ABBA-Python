@@ -37,8 +37,8 @@ if __name__ == '__main__':
 
     import platform
     if platform.system() == 'Windows':
-        elastixPath = str(os.path.join(os.getcwd(), 'elastix-5.0.1-win64', 'elastix.exe'))
-        transformixPath = str(os.path.join(os.getcwd(), 'elastix-5.0.1-win64', 'transformix.exe'))
+        elastixPath = str(os.path.join(os.path.dirname(os.getcwd()), 'win', 'elastix-5.0.1-win64', 'elastix.exe'))
+        transformixPath = str(os.path.join(os.path.dirname(os.getcwd()), 'win', 'elastix-5.0.1-win64', 'transformix.exe'))
 
         Elastix = jimport('ch.epfl.biop.wrappers.elastix.Elastix')
         Elastix.exePath = JString(str(elastixPath))
