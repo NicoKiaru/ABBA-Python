@@ -1,6 +1,8 @@
-# [ABBA](https://biop.github.io/ijp-imagetoatlas/)-Python / Gumby
+# [ABBA](https://biop.github.io/ijp-imagetoatlas/)-Python
 
 This repository demoes how to use [ABBA](https://biop.github.io/ijp-imagetoatlas/) with python by using [PyImageJ](https://github.com/imagej/pyimagej) and [JPype](https://github.com/jpype-project/jpype).
+
+For the documentation, please check the relevant sections within [https://biop.github.io/ijp-imagetoatlas/](https://biop.github.io/ijp-imagetoatlas/).
 
 # [DeepSlice](https://github.com/PolarBean/DeepSlice)
 
