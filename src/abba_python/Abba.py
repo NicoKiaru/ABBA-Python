@@ -728,6 +728,19 @@ class Abba:
                                  channels_csv: str,
                                  display_max: float,
                                  display_min: float):
+        """
+
+        Parameters
+        ----------
+        channels_csv
+            ch
+        display_max
+        display_min
+
+        Returns
+        -------
+
+        """
         SetSlicesDisplayRangeCommand = jimport('ch.epfl.biop.atlas.aligner.command.SetSlicesDisplayRangeCommand')
         return self.ij.command().run(SetSlicesDisplayRangeCommand, True,
                                      'mp', self.mp,
