@@ -1,4 +1,5 @@
 /images/
+/src/images/
 /.idea/
 /dist/
 *.iml
@@ -13,6 +14,7 @@ __pycache__/
 /constructor/abba-pack-win.tar.gz
 /constructor/*.exe
 /temp/
+/src/temp/
 /constructor/win/elastix-5.0.1-win64/
 /constructor/win/Fiji.app/
 /constructor/Fiji.app/
