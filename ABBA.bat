@@ -1,1 +1,0 @@
-C:\ProgramData\Miniconda3\Scripts\activate.bat abba-brainglobe-deepslice & python.exe "C:\Users\chiarutt\Dropbox\BIOP\ABBA-Python\run-abba-pyimagej.py"

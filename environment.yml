@@ -4,7 +4,7 @@
 # https://github.com/PolarBean/DeepSlice/tree/master/conda_environments
 # and fixing issues as mentioned in the explicit versions below
 # it seems to work with for win64 machine
-name: abba_python
+name: abba
 channels:
   - conda-forge
   - defaults
@@ -19,7 +19,7 @@ dependencies:
   - scipy
   - tensorflow=1.14.0 # modif 1: other wise the predictions from DeepSlice are bad with nan values everywhere
   - tqdm
-  - jupyter
+  - jupyterlab
   - pyimagej
   - python
   - xarray
