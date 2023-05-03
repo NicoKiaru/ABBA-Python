@@ -1,3 +1,6 @@
+# This repository is now replaced by [https://github.com/BIOP/abba_python](https://github.com/BIOP/abba_python)
+
+
 # [ABBA](https://biop.github.io/ijp-imagetoatlas/)-Python
 
 This repository demoes how to use [ABBA](https://biop.github.io/ijp-imagetoatlas/) with python by using [PyImageJ](https://github.com/imagej/pyimagej) and [JPype](https://github.com/jpype-project/jpype).
